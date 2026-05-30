@@ -1,0 +1,310 @@
+@import 'tailwindcss';
+
+/* next-themes toggles `.dark` on <html>; enable Tailwind's dark: variant off it. */
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   Self-hosted variable fonts (Inter + JetBrains Mono) — SIL OFL
+   ============================================================ */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-VariableFont_opsz_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Italic-VariableFont_opsz_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ============================================================
+   Daily Dojo tokens — Modern Minimal, lime edge. OKLCH.
+   Source of truth ported from design handoff colors_and_type.css
+   ============================================================ */
+:root {
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.21 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.21 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.21 0 0);
+
+  /* Primary CTA = near-black */
+  --primary: oklch(0.21 0 0);
+  --primary-foreground: oklch(0.99 0 0);
+
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.32 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.55 0 0);
+
+  /* Accent = lime/chartreuse signature */
+  --accent: oklch(0.9 0.19 124);
+  --accent-foreground: oklch(0.24 0.06 130);
+
+  --destructive: oklch(0.58 0.22 27);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.92 0 0);
+  --input: oklch(0.92 0 0);
+  --ring: oklch(0.9 0.19 124);
+
+  --radius: 0.75rem;
+
+  /* Brand / categorical palette (shared across themes) */
+  --brand-lime: oklch(0.9 0.19 124);
+  --brand-lime-foreground: oklch(0.24 0.06 130);
+  --brand-periwinkle: oklch(0.72 0.13 286);
+  --brand-periwinkle-foreground: oklch(0.22 0.04 286);
+  --brand-cyan: oklch(0.8 0.1 213);
+  --brand-cyan-foreground: oklch(0.22 0.04 213);
+  /* Soft lime wash for progress pills */
+  --lime-soft: color-mix(in oklch, var(--brand-lime) 30%, transparent);
+  /* Soft green wash for completed / checked states (done = green, not lime) */
+  --green-soft: color-mix(in oklch, var(--status-done) 16%, transparent);
+
+  /* Status (true semantic colors, distinct from brand) */
+  --status-done: oklch(0.72 0.17 145); /* green — NOT lime */
+  --status-progress: oklch(0.78 0.11 230); /* sky   */
+  --status-warning: oklch(0.82 0.16 85); /* amber */
+  --status-blocked: oklch(0.58 0.22 27); /* red   */
+  --status-muted: oklch(0.7 0 0); /* gray  */
+
+  /* Charts */
+  --chart-1: var(--brand-lime);
+  --chart-2: var(--brand-periwinkle);
+  --chart-3: var(--brand-cyan);
+  --chart-4: oklch(0.75 0.15 50);
+  --chart-5: oklch(0.55 0 0);
+
+  /* Sidebar (left rail) */
+  --sidebar: oklch(0.98 0 0);
+  --sidebar-foreground: oklch(0.21 0 0);
+  --sidebar-primary: oklch(0.9 0.19 124);
+  --sidebar-primary-foreground: oklch(0.24 0.06 130);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.21 0 0);
+  --sidebar-border: oklch(0.92 0 0);
+  --sidebar-ring: oklch(0.9 0.19 124);
+
+  /* Fonts */
+  --font-sans: Inter, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Elevation (low, soft) */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-pop: 0 8px 24px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05);
+  --shadow-panel: 0 12px 40px rgba(0, 0, 0, 0.07), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-shell: 0 24px 60px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.dark {
+  --background: oklch(0.15 0.004 285);
+  --foreground: oklch(0.96 0 0);
+  --card: oklch(0.21 0.004 285);
+  --card-foreground: oklch(0.96 0 0);
+  --popover: oklch(0.21 0.004 285);
+  --popover-foreground: oklch(0.96 0 0);
+
+  /* Primary CTA inverts to near-white */
+  --primary: oklch(0.96 0 0);
+  --primary-foreground: oklch(0.18 0 0);
+
+  --secondary: oklch(0.27 0.004 285);
+  --secondary-foreground: oklch(0.96 0 0);
+  --muted: oklch(0.27 0.004 285);
+  --muted-foreground: oklch(0.71 0 0);
+
+  --accent: oklch(0.9 0.19 124);
+  --accent-foreground: oklch(0.22 0.06 130);
+
+  --destructive: oklch(0.62 0.21 25);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.3 0.004 285);
+  --input: oklch(0.3 0.004 285);
+  --ring: oklch(0.9 0.19 124);
+
+  /* brand inherits; bump progress for dark */
+  --status-progress: oklch(0.8 0.11 230);
+
+  --sidebar: oklch(0.15 0.004 285);
+  --sidebar-foreground: oklch(0.96 0 0);
+  --sidebar-primary: oklch(0.9 0.19 124);
+  --sidebar-primary-foreground: oklch(0.22 0.06 130);
+  --sidebar-accent: oklch(0.27 0.004 285);
+  --sidebar-accent-foreground: oklch(0.96 0 0);
+  --sidebar-border: oklch(0.3 0.004 285);
+  --sidebar-ring: oklch(0.9 0.19 124);
+
+  /* Dark elevation = lightness separation, minimal shadow */
+  --shadow-card: none;
+  --shadow-pop: 0 12px 32px rgba(0, 0, 0, 0.5);
+  --shadow-panel: 0 24px 60px rgba(0, 0, 0, 0.5);
+  --shadow-shell: 0 30px 70px rgba(0, 0, 0, 0.6);
+}
+
+/* ============================================================
+   Expose tokens to Tailwind utilities (bg-brand-lime, text-status-done…)
+   ============================================================ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-brand-lime: var(--brand-lime);
+  --color-brand-lime-foreground: var(--brand-lime-foreground);
+  --color-brand-periwinkle: var(--brand-periwinkle);
+  --color-brand-periwinkle-foreground: var(--brand-periwinkle-foreground);
+  --color-brand-cyan: var(--brand-cyan);
+  --color-brand-cyan-foreground: var(--brand-cyan-foreground);
+
+  --color-status-done: var(--status-done);
+  --color-status-progress: var(--status-progress);
+  --color-status-warning: var(--status-warning);
+  --color-status-blocked: var(--status-blocked);
+  --color-status-muted: var(--status-muted);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  /* Tabular numerals everywhere the mono face is used — times, %, dates */
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /* ============================================================
+     Grid backdrop — lime gradient grid + blooms behind the app shell
+     and the auth card. Fixed at z-0; re-themes via the .dark scope.
+     ============================================================ */
+  .dd-grid-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-color: var(--background);
+    --grid: color-mix(in oklch, var(--foreground) 7%, transparent);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+      radial-gradient(58% 52% at 14% 86%, oklch(0.9 0.19 124 / 0.42), transparent 70%),
+      radial-gradient(46% 42% at 88% 14%, oklch(0.9 0.19 124 / 0.24), transparent 72%),
+      radial-gradient(40% 38% at 70% 96%, oklch(0.9 0.19 124 / 0.16), transparent 75%);
+    background-size: 54px 54px, 54px 54px, cover, cover, cover;
+  }
+  .dark .dd-grid-backdrop {
+    --grid: color-mix(in oklch, var(--foreground) 9%, transparent);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+      radial-gradient(58% 52% at 14% 86%, oklch(0.9 0.19 124 / 0.3), transparent 70%),
+      radial-gradient(46% 42% at 88% 14%, oklch(0.9 0.19 124 / 0.18), transparent 72%),
+      radial-gradient(40% 38% at 70% 96%, oklch(0.9 0.19 124 / 0.12), transparent 75%);
+  }
+
+  /* Slim scrollbar for in-card scroll panes (main list + detail panel) */
+  .dd-scroll::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+  .dd-scroll::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 9999px;
+    border: 2px solid var(--card);
+  }
+}
+
+/* ============================================================
+   Dialog motion — entrance only (overlay fade + content lift). The close is
+   intentionally instant: Radix gates unmount on a running exit animation, so a
+   data-state='closed' animation here can strand the node mounted (and pointer-
+   blocking) if its animationend isn't observed. Entrance-only keeps the polish
+   on open and lets Radix unmount cleanly on close.
+   ============================================================ */
+@keyframes dd-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes dd-content-in {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.97); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+.dd-dialog-overlay[data-state='open'] {
+  animation: dd-overlay-in 150ms ease-out;
+}
+.dd-dialog-content[data-state='open'] {
+  animation: dd-content-in 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .dd-dialog-overlay[data-state='open'],
+  .dd-dialog-content[data-state='open'] {
+    animation: none;
+  }
+}
