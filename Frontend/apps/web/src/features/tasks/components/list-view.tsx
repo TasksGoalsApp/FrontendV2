@@ -1,9 +1,9 @@
 import { useMemo, type ReactNode } from 'react'
 import { ClipboardList } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { isSameDay, startOfDay } from '../lib/dates'
-import type { Task } from '../types'
+import type { Task } from '../types/task.type'
 import { TaskRow } from './task-row'
 
 export function ListView({
@@ -15,18 +15,18 @@ export function ListView({
 }: {
   tasks: Task[]
   today: Date
-  selected: string
-  onSelect: (id: string) => void
-  onToggle: (id: string) => void
+  selected: number
+  onSelect: (id: number) => void
+  onToggle: (id: number) => void
 }) {
   const t0 = startOfDay(today)
   const groups = useMemo(() => {
-    const active = tasks.filter((t) => t.status !== 'done')
+    const active = tasks.filter((t) => t.task_status !== 'DONE')
     return {
       overdue: active.filter((t) => startOfDay(t.due) < t0),
       today: active.filter((t) => isSameDay(t.due, today)),
       upcoming: active.filter((t) => startOfDay(t.due) > t0),
-      completed: tasks.filter((t) => t.status === 'done'),
+      completed: tasks.filter((t) => t.task_status === 'DONE'),
     }
   }, [tasks, today, t0])
 

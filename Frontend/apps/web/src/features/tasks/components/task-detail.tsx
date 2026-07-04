@@ -2,11 +2,11 @@ import type { ReactNode } from 'react'
 import { Calendar, ExternalLink, Pencil } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { CatIcon } from '@/shared/components/cat-icon'
 import { PRIORITY_META } from '../data'
 import { startOfDay } from '../lib/dates'
-import type { Task } from '../types'
+import type { Task } from '../types/task.type'
 import { StatusBadge } from './status-badge'
 
 export function TaskDetail({

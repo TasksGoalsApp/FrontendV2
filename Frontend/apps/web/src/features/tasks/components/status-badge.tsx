@@ -6,8 +6,8 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
-import type { TaskStatus } from '../types'
+import { cn } from '@/shared/lib/utils'
+import type { TaskStatus } from '../types/task.type'
 
 const META: Record<
   TaskStatus | 'overdue',

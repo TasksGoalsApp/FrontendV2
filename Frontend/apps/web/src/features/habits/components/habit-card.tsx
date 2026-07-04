@@ -1,7 +1,7 @@
 import type { KeyboardEvent } from 'react'
 import { Check, Flame } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { CatIcon } from '@/shared/components/cat-icon'
 import { completionRate, currentStreak, isDoneToday } from '../lib/streak'
 import type { Habit } from '../types'

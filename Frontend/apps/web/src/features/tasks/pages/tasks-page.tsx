@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { categoryByKey, resolveCategoryKey } from '@/shared/categories'
 import {
   CreateEditDialog,
@@ -17,9 +17,9 @@ import { ListView } from '../components/list-view'
 import { MonthView } from '../components/month-view'
 import { TaskDetail } from '../components/task-detail'
 import { WeekView } from '../components/week-view'
-import { TASKS } from '../data'
+// import { TASKS } from '../data'
 import { startOfDay } from '../lib/dates'
-import type { Task, TaskStatus, TaskView } from '../types'
+import type { Task, TaskStatus, TaskScheduleType } from '../types/task.type'
 
 let taskSeq = 0
 function nextTaskId() {
@@ -30,82 +30,82 @@ function nextTaskId() {
  * Bridge the shared form values to the local Task shape (and back for edit).
  * When the backend lands (step c) this becomes the create/update mutation map.
  */
-function taskFromValues(values: TaskFormValues, existing?: Task): Task {
-  const category = categoryByKey(values.categoryKey)
-  return {
-    id: existing?.id ?? nextTaskId(),
-    title: values.title,
-    category: category.color,
-    categoryLabel: category.label,
-    icon: category.icon,
-    due: fromDateInput(values.due),
-    time: values.time || undefined,
-    status: values.status,
-    priority: values.priority,
-    notes: values.notes.trim() || undefined,
-  }
-}
+// function taskFromValues(values: TaskFormValues, existing?: Task): Task {
+//   const category = categoryByKey(values.categoryKey)
+//   return {
+//     id: existing?.id ?? nextTaskId(),
+//     title: values.title,
+//     category: category.color,
+//     categoryLabel: category.label,
+//     icon: category.icon,
+//     due: fromDateInput(values.due),
+//     time: values.time || undefined,
+//     status: values.status,
+//     priority: values.priority,
+//     notes: values.notes.trim() || undefined,
+//   }
+// }
 
 function valuesFromTask(task: Task): Partial<TaskFormValues> {
   return {
-    title: task.title,
+    title: task.task_title,
     categoryKey: resolveCategoryKey(task.categoryLabel, task.category),
-    due: toDateInput(task.due),
-    time: task.time ?? '',
-    priority: task.priority,
-    status: task.status,
-    notes: task.notes ?? '',
+    due: task.end_date,
+    // time: task.time ?? '',
+    priority: task.task_priority,
+    status: task.task_status,
+    notes: task.task_description ?? '',
   }
 }
 
-const VIEWS: { key: TaskView; label: string }[] = [
-  { key: 'list', label: 'List' },
-  { key: 'week', label: 'Week' },
-  { key: 'month', label: 'Month' },
+const VIEWS: { key: TaskScheduleType; label: string }[] = [
+  { key: 'DAY', label: 'List' },
+  { key: 'WEEK', label: 'Week' },
+  { key: 'RANDOM', label: 'Month' },
 ]
 
 const FILTERS: { key: 'all' | TaskStatus; label: string }[] = [
   { key: 'all', label: 'All' },
-  { key: 'todo', label: 'To do' },
-  { key: 'in_progress', label: 'In progress' },
-  { key: 'done', label: 'Done' },
+  { key: 'TODO', label: 'To do' },
+  { key: 'IN_PROGRESS', label: 'In progress' },
+  { key: 'DONE', label: 'Done' },
 ]
 
 export function TasksPage() {
   const today = useMemo(() => startOfDay(new Date()), [])
   const [tasks, setTasks] = useState(TASKS)
-  const [view, setView] = useState<TaskView>('list')
+  const [view, setView] = useState<TaskScheduleType>('LIST')
   const [filter, setFilter] = useState<'all' | TaskStatus>('all')
-  const [selected, setSelected] = useState(TASKS[0].id)
+  const [selected, setSelected] = useState(TASKS[0].task_id)
 
   const visible = useMemo(
-    () => (filter === 'all' ? tasks : tasks.filter((t) => t.status === filter)),
+    () => (filter === 'all' ? tasks : tasks.filter((t) => t.task_status === filter)),
     [tasks, filter]
   )
 
-  function toggle(id: string) {
+  function toggle(id: number) {
     setTasks((prev) =>
       prev.map((t) =>
-        t.id === id ? { ...t, status: t.status === 'done' ? 'todo' : 'done' } : t
+        t.task_id === id ? { ...t, status: t.task_status === 'DONE' ? 'TODO' : 'DONE' } : t
       )
     )
   }
 
-  function openFromCalendar(id: string) {
+  function openFromCalendar(id: number) {
     setSelected(id)
     setView('list')
   }
 
-  const selectedTask = tasks.find((t) => t.id === selected) ?? tasks[0]
+  const selectedTask = tasks.find((t) => t.task_id === selected) ?? tasks[0]
 
   const [dialog, setDialog] = useState<{
     open: boolean
     mode: DialogMode
-    editId?: string
+    editId?: number
   }>({ open: false, mode: 'create' })
 
   const editingTask = dialog.editId
-    ? tasks.find((t) => t.id === dialog.editId)
+    ? tasks.find((t) => t.task_id === dialog.editId)
     : undefined
   const dialogInitial =
     dialog.mode === 'edit' && editingTask
@@ -115,13 +115,13 @@ export function TasksPage() {
   function handleDialogSubmit(values: TaskFormValues) {
     if (dialog.mode === 'edit' && editingTask) {
       setTasks((prev) =>
-        prev.map((t) => (t.id === editingTask.id ? taskFromValues(values, t) : t))
+        prev.map((t) => (t.task_id === editingTask.task_id ? taskFromValues(values, t) : t))
       )
       toast.success('Task updated', { description: values.title })
     } else {
       const task = taskFromValues(values)
       setTasks((prev) => [task, ...prev])
-      setSelected(task.id)
+      setSelected(task.task_id)
       toast.success('Task added', { description: values.title })
     }
   }
@@ -189,10 +189,10 @@ export function TasksPage() {
             onToggle={toggle}
           />
         )}
-        {view === 'week' && (
+        {view === 'WEEK' && (
           <WeekView tasks={visible} today={today} onOpen={openFromCalendar} />
         )}
-        {view === 'month' && (
+        {view === 'RANDOM' && (
           <MonthView tasks={visible} today={today} onOpen={openFromCalendar} />
         )}
       </main>
@@ -201,9 +201,9 @@ export function TasksPage() {
         <TaskDetail
           task={selectedTask}
           today={today}
-          onToggle={() => toggle(selectedTask.id)}
+          onToggle={() => toggle(selectedTask.task_id)}
           onEdit={() =>
-            setDialog({ open: true, mode: 'edit', editId: selectedTask.id })
+            setDialog({ open: true, mode: 'edit', editId: selectedTask.task_id })
           }
         />
       )}

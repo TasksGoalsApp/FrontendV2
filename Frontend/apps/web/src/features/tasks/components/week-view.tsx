@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { addDays, isSameDay, startOfDay, startOfWeek } from '../lib/dates'
-import type { Task } from '../types'
+import type { Task } from '../types/task.type'
 import { TaskChip } from './task-chip'
 
 export function WeekView({
@@ -10,7 +10,7 @@ export function WeekView({
 }: {
   tasks: Task[]
   today: Date
-  onOpen: (id: string) => void
+  onOpen: (id: number) => void
 }) {
   const start = startOfWeek(today)
   const days = Array.from({ length: 7 }, (_, i) => addDays(start, i))
@@ -51,10 +51,10 @@ export function WeekView({
             <div className="flex flex-col gap-1">
               {items.map((t) => (
                 <TaskChip
-                  key={t.id}
+                  key={t.task_id}
                   task={t}
-                  overdue={startOfDay(t.due) < t0 && t.status !== 'done'}
-                  onClick={() => onOpen(t.id)}
+                  overdue={startOfDay(t.due) < t0 && t.task_status !== 'DONE'}
+                  onClick={() => onOpen(t.task_id)}
                 />
               ))}
               {items.length === 0 && (

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { CATEGORIES } from '@/shared/categories'
 import { CatIcon } from '@/shared/components/cat-icon'
 

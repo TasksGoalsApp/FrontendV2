@@ -1,11 +1,11 @@
 import type { KeyboardEvent } from 'react'
 
 import { Checkbox } from '@/components/ui/checkbox'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { CatIcon } from '@/shared/components/cat-icon'
 import { PRIORITY_META } from '../data'
 import { addDays, isSameDay, startOfDay } from '../lib/dates'
-import type { Task } from '../types'
+import type { Task } from '../types/task.type'
 import { StatusBadge } from './status-badge'
 
 function dueLabel(due: Date, today: Date): string {

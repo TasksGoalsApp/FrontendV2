@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import type { CategoryColor } from '@/shared/components/cat-icon'
 
 const FILL: Record<CategoryColor, string> = {

@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 
 /**
  * Fixed, full-viewport lime gradient-grid backdrop. Painted at z-0 behind the

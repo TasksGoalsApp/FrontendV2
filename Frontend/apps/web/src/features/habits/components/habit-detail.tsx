@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { CatIcon } from '@/shared/components/cat-icon'
 import { Sparkline } from '@/shared/components/sparkline'
 import {

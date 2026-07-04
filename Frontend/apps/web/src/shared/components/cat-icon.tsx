@@ -1,6 +1,6 @@
 import type { LucideIcon } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 
 /** Categorical brand hues used for goal/task/habit labels and data viz. */
 export type CategoryColor = 'lime' | 'periwinkle' | 'cyan'

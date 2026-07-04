@@ -12,7 +12,7 @@ import {
 } from 'lucide-react'
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { useAuth } from '@/features/auth/auth-context'
 import { BrandMark } from '@/shared/components/brand-mark'
 

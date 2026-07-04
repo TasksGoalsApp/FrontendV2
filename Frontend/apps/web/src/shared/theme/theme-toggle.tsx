@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 
 /**
  * Light/dark toggle. Sizing/radius is left to the caller via `className`

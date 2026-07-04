@@ -19,8 +19,8 @@ export const taskSchema = z.object({
   categoryKey: z.string().min(1, 'Pick a category.'),
   due: z.string().min(1, 'Choose a due date.'),
   time: z.string().regex(HHMM, 'Use 24-hour time, e.g. 14:30.'),
-  priority: z.enum(['low', 'medium', 'high', 'urgent']),
-  status: z.enum(['todo', 'in_progress', 'done']),
+  priority: z.enum(['LOW', 'MEDIUM', 'HIGH', 'URGENT']),
+  status: z.enum(['TODO', 'IN_PROGRESS', 'DONE']),
   notes: z.string().max(500, 'That note is a little long.'),
 })
 

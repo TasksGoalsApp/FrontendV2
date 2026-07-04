@@ -1,6 +1,6 @@
 import { Swords } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 
 /**
  * The lime rounded-square Daily Dojo mark (swords glyph).

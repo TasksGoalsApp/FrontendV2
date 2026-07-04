@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import {
   addDays,
   isSameDay,
@@ -7,7 +7,7 @@ import {
   startOfMonth,
   startOfWeek,
 } from '../lib/dates'
-import type { Task } from '../types'
+import type { Task } from '../types/task.type'
 import { TaskChip } from './task-chip'
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -19,7 +19,7 @@ export function MonthView({
 }: {
   tasks: Task[]
   today: Date
-  onOpen: (id: string) => void
+  onOpen: (id: number) => void
 }) {
   const monthStart = startOfMonth(today)
   const gridStart = startOfWeek(monthStart)
@@ -68,10 +68,10 @@ export function MonthView({
                 <div className="flex flex-col gap-0.5">
                   {items.slice(0, 3).map((t) => (
                     <TaskChip
-                      key={t.id}
+                      key={t.task_id}
                       task={t}
-                      overdue={startOfDay(t.due) < t0 && t.status !== 'done'}
-                      onClick={() => onOpen(t.id)}
+                      overdue={startOfDay(t.due) < t0 && t.task_status !== 'DONE'}
+                      onClick={() => onOpen(t.task_id)}
                     />
                   ))}
                   {items.length > 3 && (

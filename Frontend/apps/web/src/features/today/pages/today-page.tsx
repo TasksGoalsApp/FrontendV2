@@ -5,7 +5,7 @@ import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { categoryByKey } from '@/shared/categories'
 import {
   CreateEditDialog,
@@ -47,7 +47,7 @@ function todayTaskFromValues(values: TaskFormValues): TaskItem {
     tag: category.label,
     icon: category.icon,
     color: category.color,
-    done: values.status === 'done',
+    done: values.status === 'DONE',
   }
 }
 
