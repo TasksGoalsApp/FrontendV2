@@ -1,0 +1,12 @@
+name: Discord Frontend Notification
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notify:
+    uses: TasksGoalsApp/.github/.github/workflows/discord-frontend-notification.yml@main
+    secrets:
+      DISCORD_FRONTEND_WEBHOOK_URL: ${{ secrets.DISCORD_FRONTEND_WEBHOOK_URL }}
